@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Privacy Monitor</string>
+    <string name="tagline">Samjho kaunsi app aapki privacy use kar rahi hai.</string>
+    <string name="widget_name">Privacy Score Widget</string>
+
+    <!-- Navigation -->
+    <string name="nav_home">Home</string>
+    <string name="nav_apps">Apps</string>
+    <string name="nav_reports">Reports</string>
+    <string name="nav_sensors">Sensors</string>
+    <string name="nav_settings">Settings</string>
+
+    <!-- Header & Greetings -->
+    <string name="greeting_format">Namaste, %1$s</string>
+    <string name="user_default">Rahul</string>
+
+    <!-- Score Card -->
+    <string name="ai_privacy_score">AI Privacy Score</string>
+    <string name="score_format">%1$d/100</string>
+    <string name="risky_apps_detected">%1$d risky apps detected — action needed</string>
+    <string name="risk_good">Safe — Minimal Risk</string>
+    <string name="risk_moderate">Moderate Risk — Action Needed</string>
+    <string name="risk_high">High Risk — Urgent Action</string>
+    <string name="risk_critical">Critical Risk — Immediate Attention</string>
+    <string name="score_disclaimer">This score is an estimate based on observable permissions and activity. It is not a guarantee that an app is safe or unsafe.</string>
+
+    <!-- Overview Cards -->
+    <string name="installed_apps">Installed apps</string>
+    <string name="location_access">Location access</string>
+    <string name="mic_access">Mic access</string>
+    <string name="data_today">Data today</string>
+
+    <!-- Sections -->
+    <string name="risky_apps">Risky apps</string>
+    <string name="live_sensors">Live sensors</string>
+    <string name="recent_alerts">Recent alerts</string>
+    <string name="sab_dekho">Sab dekho ↗</string>
+    <string name="details">Details ↗</string>
+    <string name="full_scan_cta">Full privacy scan chalao ↗</string>
+    <string name="scanning_progress">Installed apps check ho rahi hain…</string>
+
+    <!-- Sensors -->
+    <string name="sensor_gps">GPS</string>
+    <string name="sensor_network">Network</string>
+    <string name="sensor_mic">Microphone</string>
+    <string name="sensor_camera">Camera</string>
+    <string name="sensor_bluetooth">Bluetooth</string>
+    <string name="sensor_gyro">Gyroscope</string>
+    <string name="status_active">Active</string>
+    <string name="status_off">Off</string>
+    <string name="status_unavailable">Unavailable</string>
+    <string name="status_recently_used">Recently used</string>
+
+    <!-- Privacy Advisor -->
+    <string name="advisor_title">AI Privacy Advisor</string>
+    <string name="advisor_subtitle">Hindi aur Hinglish mein privacy samjhein</string>
+    <string name="ask_advisor_placeholder">Poochhein… (e.g. TikTok risky kyun hai?)</string>
+
+    <!-- Buttons & Actions -->
+    <string name="review_permissions">Review permissions</string>
+    <string name="uninstall_app">Uninstall app</string>
+    <string name="share_report">Share report</string>
+    <string name="export_pdf">Export PDF report</string>
+    <string name="continue_button">Continue</string>
+    <string name="check_privacy">Check my privacy</string>
+
+    <!-- Onboarding -->
+    <string name="onboarding_title_1">Your phone. Your privacy.</string>
+    <string name="onboarding_body_1">Understand which apps can access your camera, microphone, location, contacts, and data.</string>
+    <string name="onboarding_title_2">How Privacy Monitor Works</string>
+    <string name="onboarding_body_2">We analyze observable permissions, detect unusual patterns, and calculate an explainable privacy score stored 100% locally on your device.</string>
+</resources>
