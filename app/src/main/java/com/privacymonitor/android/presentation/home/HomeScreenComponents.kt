@@ -22,6 +22,8 @@ import androidx.compose.material.icons.filled.Apps
 import androidx.compose.material.icons.filled.Bluetooth
 import androidx.compose.material.icons.filled.CameraAlt
 import androidx.compose.material.icons.filled.CellTower
+import androidx.compose.material.icons.filled.DarkMode
+import androidx.compose.material.icons.filled.LightMode
 import androidx.compose.material.icons.filled.Mic
 import androidx.compose.material.icons.filled.MyLocation
 import androidx.compose.material.icons.filled.Notifications
@@ -48,15 +50,11 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import com.privacymonitor.android.R
-import com.privacymonitor.android.core.designsystem.CardBackgroundDark
 import com.privacymonitor.android.core.designsystem.HighRiskRed
 import com.privacymonitor.android.core.designsystem.HighRiskRedBg
 import com.privacymonitor.android.core.designsystem.PrimaryPurple
 import com.privacymonitor.android.core.designsystem.SafeTeal
 import com.privacymonitor.android.core.designsystem.SafeTealBg
-import com.privacymonitor.android.core.designsystem.SurfaceDark
-import com.privacymonitor.android.core.designsystem.TextPrimaryDark
-import com.privacymonitor.android.core.designsystem.TextSecondaryDark
 import com.privacymonitor.android.core.designsystem.WarningAmber
 import com.privacymonitor.android.core.designsystem.WarningAmberBg
 import com.privacymonitor.android.domain.model.InstalledApp
@@ -66,7 +64,12 @@ import com.privacymonitor.android.domain.model.SensorState
 import com.privacymonitor.android.domain.model.SensorStatus
 
 @Composable
-fun HomeHeader() {
+fun HomeHeader(
+    themeMode: String,
+    onToggleTheme: () -> Unit
+) {
+    val isDark = themeMode == "DARK"
+
     Row(
         modifier = Modifier.fillMaxWidth(),
         horizontalArrangement = Arrangement.SpaceBetween,
@@ -77,13 +80,13 @@ fun HomeHeader() {
                 modifier = Modifier
                     .size(44.dp)
                     .clip(CircleShape)
-                    .background(SurfaceDark),
+                    .background(MaterialTheme.colorScheme.surfaceVariant),
                 contentAlignment = Alignment.Center
             ) {
                 Text(
                     text = "R",
                     style = MaterialTheme.typography.titleLarge,
-                    color = TextPrimaryDark,
+                    color = MaterialTheme.colorScheme.onSurface,
                     fontWeight = FontWeight.Bold
                 )
             }
@@ -92,34 +95,46 @@ fun HomeHeader() {
                 Text(
                     text = stringResource(id = R.string.greeting_format, "Rahul"),
                     style = MaterialTheme.typography.bodyMedium,
-                    color = TextSecondaryDark
+                    color = MaterialTheme.colorScheme.onSurfaceVariant
                 )
                 Text(
                     text = stringResource(id = R.string.app_name),
                     style = MaterialTheme.typography.headlineMedium,
-                    color = TextPrimaryDark,
+                    color = MaterialTheme.colorScheme.onSurface,
                     fontWeight = FontWeight.Bold
                 )
             }
         }
 
-        Box {
-            IconButton(onClick = { }) {
+        Row(verticalAlignment = Alignment.CenterVertically) {
+            // Light / Dark Theme Switch Button
+            IconButton(onClick = onToggleTheme) {
                 Icon(
-                    imageVector = Icons.Default.Notifications,
-                    contentDescription = "Notifications",
-                    tint = TextPrimaryDark,
-                    modifier = Modifier.size(26.dp)
+                    imageVector = if (isDark) Icons.Default.LightMode else Icons.Default.DarkMode,
+                    contentDescription = "Toggle Light/Dark Theme",
+                    tint = if (isDark) WarningAmber else PrimaryPurple,
+                    modifier = Modifier.size(24.dp)
                 )
             }
-            Box(
-                modifier = Modifier
-                    .size(8.dp)
-                    .clip(CircleShape)
-                    .background(HighRiskRed)
-                    .align(Alignment.TopEnd)
-                    .padding(end = 4.dp, top = 4.dp)
-            )
+
+            Box {
+                IconButton(onClick = { }) {
+                    Icon(
+                        imageVector = Icons.Default.Notifications,
+                        contentDescription = "Notifications",
+                        tint = MaterialTheme.colorScheme.onSurface,
+                        modifier = Modifier.size(26.dp)
+                    )
+                }
+                Box(
+                    modifier = Modifier
+                        .size(8.dp)
+                        .clip(CircleShape)
+                        .background(HighRiskRed)
+                        .align(Alignment.TopEnd)
+                        .padding(end = 4.dp, top = 4.dp)
+                )
+            }
         }
     }
 }
@@ -134,13 +149,13 @@ fun ScoreCard(
     Card(
         modifier = Modifier.fillMaxWidth(),
         shape = RoundedCornerShape(24.dp),
-        colors = CardDefaults.cardColors(containerColor = CardBackgroundDark)
+        colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface)
     ) {
         Column(modifier = Modifier.padding(20.dp)) {
             Text(
                 text = stringResource(id = R.string.ai_privacy_score),
                 style = MaterialTheme.typography.bodyMedium,
-                color = TextSecondaryDark
+                color = MaterialTheme.colorScheme.onSurfaceVariant
             )
             Spacer(modifier = Modifier.height(8.dp))
 
@@ -153,13 +168,13 @@ fun ScoreCard(
                     Text(
                         text = "$score",
                         style = MaterialTheme.typography.displayLarge,
-                        color = TextPrimaryDark,
+                        color = MaterialTheme.colorScheme.onSurface,
                         fontWeight = FontWeight.Bold
                     )
                     Text(
                         text = "/100",
                         style = MaterialTheme.typography.headlineSmall,
-                        color = TextSecondaryDark,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant,
                         modifier = Modifier.padding(bottom = 6.dp)
                     )
                 }
@@ -177,12 +192,12 @@ fun ScoreCard(
                             RiskLevel.HIGH, RiskLevel.CRITICAL -> HighRiskRed
                         },
                         strokeWidth = 6.dp,
-                        trackColor = SurfaceDark,
+                        trackColor = MaterialTheme.colorScheme.surfaceVariant,
                     )
                     Text(
                         text = "$score%",
                         style = MaterialTheme.typography.labelMedium,
-                        color = TextPrimaryDark,
+                        color = MaterialTheme.colorScheme.onSurface,
                         fontWeight = FontWeight.Bold
                     )
                 }
@@ -193,7 +208,7 @@ fun ScoreCard(
             Text(
                 text = stringResource(id = R.string.risky_apps_detected, riskyAppsCount),
                 style = MaterialTheme.typography.bodyMedium,
-                color = TextSecondaryDark
+                color = MaterialTheme.colorScheme.onSurfaceVariant
             )
 
             Spacer(modifier = Modifier.height(14.dp))
@@ -242,7 +257,7 @@ fun OverviewSection(
         Text(
             text = "Overview",
             style = MaterialTheme.typography.titleMedium,
-            color = TextPrimaryDark,
+            color = MaterialTheme.colorScheme.onSurface,
             fontWeight = FontWeight.SemiBold
         )
         Spacer(modifier = Modifier.height(10.dp))
@@ -312,7 +327,7 @@ fun OverviewCard(
     Card(
         modifier = modifier,
         shape = RoundedCornerShape(18.dp),
-        colors = CardDefaults.cardColors(containerColor = CardBackgroundDark)
+        colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface)
     ) {
         Column(modifier = Modifier.padding(14.dp)) {
             Row(
@@ -323,7 +338,7 @@ fun OverviewCard(
                 Icon(
                     imageVector = icon,
                     contentDescription = null,
-                    tint = TextSecondaryDark,
+                    tint = MaterialTheme.colorScheme.onSurfaceVariant,
                     modifier = Modifier.size(22.dp)
                 )
                 Box(
@@ -346,13 +361,13 @@ fun OverviewCard(
             Text(
                 text = countText,
                 style = MaterialTheme.typography.headlineMedium,
-                color = TextPrimaryDark,
+                color = MaterialTheme.colorScheme.onSurface,
                 fontWeight = FontWeight.Bold
             )
             Text(
                 text = title,
                 style = MaterialTheme.typography.bodyMedium,
-                color = TextSecondaryDark
+                color = MaterialTheme.colorScheme.onSurfaceVariant
             )
         }
     }
@@ -368,7 +383,7 @@ fun SectionHeader(title: String, actionText: String, onActionClick: () -> Unit) 
         Text(
             text = title,
             style = MaterialTheme.typography.titleMedium,
-            color = TextPrimaryDark,
+            color = MaterialTheme.colorScheme.onSurface,
             fontWeight = FontWeight.SemiBold
         )
         Text(
@@ -388,7 +403,7 @@ fun RiskyAppItem(app: InstalledApp, onClick: () -> Unit) {
             .fillMaxWidth()
             .clickable { onClick() },
         shape = RoundedCornerShape(18.dp),
-        colors = CardDefaults.cardColors(containerColor = CardBackgroundDark)
+        colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface)
     ) {
         Row(
             modifier = Modifier
@@ -405,7 +420,7 @@ fun RiskyAppItem(app: InstalledApp, onClick: () -> Unit) {
                     modifier = Modifier
                         .size(44.dp)
                         .clip(RoundedCornerShape(12.dp))
-                        .background(SurfaceDark),
+                        .background(MaterialTheme.colorScheme.surfaceVariant),
                     contentAlignment = Alignment.Center
                 ) {
                     Text(
@@ -422,13 +437,13 @@ fun RiskyAppItem(app: InstalledApp, onClick: () -> Unit) {
                     Text(
                         text = app.appName,
                         style = MaterialTheme.typography.titleMedium,
-                        color = TextPrimaryDark,
+                        color = MaterialTheme.colorScheme.onSurface,
                         fontWeight = FontWeight.SemiBold
                     )
                     Text(
                         text = app.permissions.filter { it.isGranted }.take(3).joinToString(" · ") { it.category },
                         style = MaterialTheme.typography.bodyMedium,
-                        color = TextSecondaryDark
+                        color = MaterialTheme.colorScheme.onSurfaceVariant
                     )
                 }
             }
@@ -473,16 +488,16 @@ fun SensorCard(modifier: Modifier = Modifier, sensor: SensorStatus) {
     val (icon, activeColor) = when (sensor.id) {
         "gps" -> Pair(Icons.Default.MyLocation, PrimaryPurple)
         "network" -> Pair(Icons.Default.CellTower, PrimaryPurple)
-        "camera" -> Pair(Icons.Default.CameraAlt, TextSecondaryDark)
+        "camera" -> Pair(Icons.Default.CameraAlt, MaterialTheme.colorScheme.onSurfaceVariant)
         "microphone" -> Pair(Icons.Default.Mic, HighRiskRed)
         "bluetooth" -> Pair(Icons.Default.Bluetooth, PrimaryPurple)
-        else -> Pair(Icons.Default.Shield, TextSecondaryDark)
+        else -> Pair(Icons.Default.Shield, MaterialTheme.colorScheme.onSurfaceVariant)
     }
 
     Card(
         modifier = modifier,
         shape = RoundedCornerShape(16.dp),
-        colors = CardDefaults.cardColors(containerColor = CardBackgroundDark)
+        colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface)
     ) {
         Column(
             modifier = Modifier
@@ -493,20 +508,20 @@ fun SensorCard(modifier: Modifier = Modifier, sensor: SensorStatus) {
             Icon(
                 imageVector = icon,
                 contentDescription = null,
-                tint = if (sensor.state == SensorState.ACTIVE) activeColor else TextSecondaryDark,
+                tint = if (sensor.state == SensorState.ACTIVE) activeColor else MaterialTheme.colorScheme.onSurfaceVariant,
                 modifier = Modifier.size(24.dp)
             )
             Spacer(modifier = Modifier.height(6.dp))
             Text(
                 text = sensor.name,
                 style = MaterialTheme.typography.labelMedium,
-                color = TextPrimaryDark,
+                color = MaterialTheme.colorScheme.onSurface,
                 fontWeight = FontWeight.SemiBold
             )
             Text(
                 text = sensor.state.name.lowercase().replaceFirstChar { it.uppercase() },
                 style = MaterialTheme.typography.labelSmall,
-                color = if (sensor.state == SensorState.ACTIVE) activeColor else TextSecondaryDark
+                color = if (sensor.state == SensorState.ACTIVE) activeColor else MaterialTheme.colorScheme.onSurfaceVariant
             )
         }
     }
@@ -523,7 +538,7 @@ fun PrivacyAlertItem(alert: PrivacyEvent) {
     Card(
         modifier = Modifier.fillMaxWidth(),
         shape = RoundedCornerShape(16.dp),
-        colors = CardDefaults.cardColors(containerColor = CardBackgroundDark)
+        colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface)
     ) {
         Row(
             modifier = Modifier
@@ -542,13 +557,13 @@ fun PrivacyAlertItem(alert: PrivacyEvent) {
                 Text(
                     text = "${alert.appName} — ${alert.title}",
                     style = MaterialTheme.typography.titleMedium,
-                    color = TextPrimaryDark,
+                    color = MaterialTheme.colorScheme.onSurface,
                     fontWeight = FontWeight.SemiBold
                 )
                 Text(
                     text = alert.subtitle,
                     style = MaterialTheme.typography.bodyMedium,
-                    color = TextSecondaryDark
+                    color = MaterialTheme.colorScheme.onSurfaceVariant
                 )
             }
         }
@@ -562,7 +577,7 @@ fun ScanCtaCard(isLoading: Boolean, onScanClick: () -> Unit) {
             .fillMaxWidth()
             .clickable { if (!isLoading) onScanClick() },
         shape = RoundedCornerShape(20.dp),
-        colors = CardDefaults.cardColors(containerColor = SurfaceDark)
+        colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceVariant)
     ) {
         Row(
             modifier = Modifier
@@ -581,7 +596,7 @@ fun ScanCtaCard(isLoading: Boolean, onScanClick: () -> Unit) {
                 Icon(
                     imageVector = Icons.Default.Refresh,
                     contentDescription = null,
-                    tint = TextPrimaryDark,
+                    tint = MaterialTheme.colorScheme.onSurface,
                     modifier = Modifier.size(20.dp)
                 )
             }
@@ -589,7 +604,7 @@ fun ScanCtaCard(isLoading: Boolean, onScanClick: () -> Unit) {
             Text(
                 text = stringResource(id = R.string.full_scan_cta),
                 style = MaterialTheme.typography.titleMedium,
-                color = TextPrimaryDark,
+                color = MaterialTheme.colorScheme.onSurface,
                 fontWeight = FontWeight.SemiBold
             )
         }
@@ -612,7 +627,7 @@ fun ScanProgressDialog(progressState: ScanProgressState) {
                 .fillMaxWidth()
                 .padding(16.dp),
             shape = RoundedCornerShape(24.dp),
-            colors = CardDefaults.cardColors(containerColor = CardBackgroundDark)
+            colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface)
         ) {
             Column(
                 modifier = Modifier
@@ -640,7 +655,7 @@ fun ScanProgressDialog(progressState: ScanProgressState) {
                 Text(
                     text = "प्राइवेसी स्कैन जारी है",
                     style = MaterialTheme.typography.titleLarge,
-                    color = TextPrimaryDark,
+                    color = MaterialTheme.colorScheme.onSurface,
                     fontWeight = FontWeight.Bold
                 )
 
@@ -649,7 +664,7 @@ fun ScanProgressDialog(progressState: ScanProgressState) {
                 Text(
                     text = progressState.currentStepText,
                     style = MaterialTheme.typography.bodyMedium,
-                    color = TextSecondaryDark
+                    color = MaterialTheme.colorScheme.onSurfaceVariant
                 )
 
                 if (progressState.scannedAppsCount > 0) {
@@ -671,7 +686,7 @@ fun ScanProgressDialog(progressState: ScanProgressState) {
                         .height(8.dp)
                         .clip(RoundedCornerShape(4.dp)),
                     color = PrimaryPurple,
-                    trackColor = SurfaceDark
+                    trackColor = MaterialTheme.colorScheme.surfaceVariant
                 )
 
                 Spacer(modifier = Modifier.height(10.dp))
@@ -679,7 +694,7 @@ fun ScanProgressDialog(progressState: ScanProgressState) {
                 Text(
                     text = "${(animatedProgress * 100).toInt()}%",
                     style = MaterialTheme.typography.labelLarge,
-                    color = TextPrimaryDark,
+                    color = MaterialTheme.colorScheme.onSurface,
                     fontWeight = FontWeight.Bold
                 )
             }

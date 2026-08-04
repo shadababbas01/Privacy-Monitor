@@ -5,6 +5,7 @@ import android.content.res.Configuration
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
@@ -34,10 +35,18 @@ class MainActivity : ComponentActivity() {
         setContent {
             val language by userPreferencesRepository.appLanguage.collectAsState(initial = "hi")
             val onboardingCompleted by userPreferencesRepository.onboardingCompleted.collectAsState(initial = false)
+            val themeMode by userPreferencesRepository.themeMode.collectAsState(initial = "DARK")
 
             updateLocale(this, language)
 
-            PrivacyMonitorTheme {
+            val systemInDark = isSystemInDarkTheme()
+            val isDarkTheme = when (themeMode) {
+                "LIGHT" -> false
+                "DARK" -> true
+                else -> systemInDark
+            }
+
+            PrivacyMonitorTheme(darkTheme = isDarkTheme) {
                 val navController = rememberNavController()
                 val navBackStackEntry by navController.currentBackStackEntryAsState()
                 val currentRoute = navBackStackEntry?.destination?.route

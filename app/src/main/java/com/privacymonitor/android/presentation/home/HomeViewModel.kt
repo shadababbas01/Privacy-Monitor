@@ -3,6 +3,7 @@ package com.privacymonitor.android.presentation.home
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.privacymonitor.android.core.util.DispatcherProvider
+import com.privacymonitor.android.data.local.datastore.UserPreferencesRepository
 import com.privacymonitor.android.domain.model.InstalledApp
 import com.privacymonitor.android.domain.model.PrivacyEvent
 import com.privacymonitor.android.domain.model.RiskAssessment
@@ -33,6 +34,7 @@ data class ScanProgressState(
 
 data class HomeUiState(
     val isLoading: Boolean = false,
+    val themeMode: String = "DARK",
     val scanProgress: ScanProgressState = ScanProgressState(),
     val assessment: RiskAssessment? = null,
     val riskyApps: List<InstalledApp> = emptyList(),
@@ -45,6 +47,7 @@ class HomeViewModel @Inject constructor(
     private val appRepository: InstalledAppRepository,
     private val riskRepository: RiskRepository,
     private val sensorRepository: SensorRepository,
+    private val userPreferencesRepository: UserPreferencesRepository,
     private val scanAppsUseCase: ScanAppsUseCase,
     private val calculateScoreUseCase: CalculateScoreUseCase,
     private val dispatchers: DispatcherProvider
@@ -54,13 +57,15 @@ class HomeViewModel @Inject constructor(
 
     val uiState: StateFlow<HomeUiState> = combine(
         _scanProgress,
+        userPreferencesRepository.themeMode,
         appRepository.observeInstalledApps(),
         sensorRepository.observeSensorStatuses(),
         riskRepository.observeEvents()
-    ) { progress, apps, sensors, events ->
+    ) { progress, theme, apps, sensors, events ->
         val assessment = calculateScoreUseCase(apps)
         HomeUiState(
             isLoading = progress.isScanning,
+            themeMode = theme,
             scanProgress = progress,
             assessment = assessment,
             riskyApps = assessment.topRiskyApps,
@@ -85,6 +90,14 @@ class HomeViewModel @Inject constructor(
                 val assessment = calculateScoreUseCase(scanned)
                 riskRepository.saveAssessment(assessment)
             }
+        }
+    }
+
+    fun toggleTheme() {
+        viewModelScope.launch {
+            val currentMode = uiState.value.themeMode
+            val newMode = if (currentMode == "LIGHT") "DARK" else "LIGHT"
+            userPreferencesRepository.setThemeMode(newMode)
         }
     }
 
