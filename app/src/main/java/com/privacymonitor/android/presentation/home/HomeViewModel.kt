@@ -18,6 +18,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -69,11 +70,22 @@ class HomeViewModel @Inject constructor(
     }.stateIn(
         viewModelScope,
         SharingStarted.WhileSubscribed(5000),
-        HomeUiState(isLoading = true)
+        HomeUiState(isLoading = false)
     )
 
     init {
-        runFullScan()
+        loadInitialDataIfEmpty()
+    }
+
+    private fun loadInitialDataIfEmpty() {
+        viewModelScope.launch(dispatchers.io) {
+            val existingApps = appRepository.observeInstalledApps().firstOrNull()
+            if (existingApps.isNullOrEmpty()) {
+                val scanned = scanAppsUseCase()
+                val assessment = calculateScoreUseCase(scanned)
+                riskRepository.saveAssessment(assessment)
+            }
+        }
     }
 
     fun runFullScan() {
