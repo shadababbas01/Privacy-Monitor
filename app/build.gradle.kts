@@ -23,9 +23,20 @@ android {
         }
     }
 
+    signingConfigs {
+        create("release") {
+            storeFile = file("${rootDir}/release.jks")
+            storePassword = "privacymonitor123"
+            keyAlias = "privacymonitor"
+            keyPassword = "privacymonitor123"
+        }
+    }
+
     buildTypes {
         release {
-            isMinifyEnabled = false
+            isMinifyEnabled = true
+            isShrinkResources = true
+            signingConfig = signingConfigs.getByName("release")
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
