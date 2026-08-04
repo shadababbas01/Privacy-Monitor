@@ -1,11 +1,8 @@
 package com.privacymonitor.android.presentation.apps
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -17,8 +14,6 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Search
-import androidx.compose.material3.Card
-import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.FilterChip
 import androidx.compose.material3.FilterChipDefaults
 import androidx.compose.material3.Icon
@@ -29,17 +24,12 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.privacymonitor.android.R
-import com.privacymonitor.android.core.designsystem.CardBackgroundDark
-import com.privacymonitor.android.core.designsystem.DeepNavyDark
 import com.privacymonitor.android.core.designsystem.PrimaryPurple
-import com.privacymonitor.android.core.designsystem.TextPrimaryDark
-import com.privacymonitor.android.core.designsystem.TextSecondaryDark
 import com.privacymonitor.android.presentation.home.RiskyAppItem
 
 @Composable
@@ -52,13 +42,13 @@ fun AppsScreen(
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .background(DeepNavyDark)
+            .background(MaterialTheme.colorScheme.background)
             .padding(16.dp)
     ) {
         Text(
             text = stringResource(id = R.string.installed_apps),
             style = MaterialTheme.typography.headlineMedium,
-            color = TextPrimaryDark,
+            color = MaterialTheme.colorScheme.onSurface,
             fontWeight = FontWeight.Bold
         )
 
@@ -69,16 +59,16 @@ fun AppsScreen(
             value = state.searchQuery,
             onValueChange = { viewModel.onSearchQueryChanged(it) },
             modifier = Modifier.fillMaxWidth(),
-            placeholder = { Text("Search installed apps…", color = TextSecondaryDark) },
-            leadingIcon = { Icon(Icons.Default.Search, contentDescription = null, tint = TextSecondaryDark) },
+            placeholder = { Text("Search installed apps…", color = MaterialTheme.colorScheme.onSurfaceVariant) },
+            leadingIcon = { Icon(Icons.Default.Search, contentDescription = null, tint = MaterialTheme.colorScheme.onSurfaceVariant) },
             shape = RoundedCornerShape(16.dp),
             colors = OutlinedTextFieldDefaults.colors(
-                focusedContainerColor = CardBackgroundDark,
-                unfocusedContainerColor = CardBackgroundDark,
+                focusedContainerColor = MaterialTheme.colorScheme.surface,
+                unfocusedContainerColor = MaterialTheme.colorScheme.surface,
                 focusedBorderColor = PrimaryPurple,
-                unfocusedBorderColor = CardBackgroundDark,
-                focusedTextColor = TextPrimaryDark,
-                unfocusedTextColor = TextPrimaryDark
+                unfocusedBorderColor = MaterialTheme.colorScheme.surfaceVariant,
+                focusedTextColor = MaterialTheme.colorScheme.onSurface,
+                unfocusedTextColor = MaterialTheme.colorScheme.onSurface
             )
         )
 
@@ -93,12 +83,12 @@ fun AppsScreen(
                     label = {
                         Text(
                             filter.name.replace("_", " ").lowercase().replaceFirstChar { it.uppercase() },
-                            color = if (state.selectedFilter == filter) TextPrimaryDark else TextSecondaryDark
+                            color = if (state.selectedFilter == filter) MaterialTheme.colorScheme.onPrimary else MaterialTheme.colorScheme.onSurfaceVariant
                         )
                     },
                     colors = FilterChipDefaults.filterChipColors(
                         selectedContainerColor = PrimaryPurple,
-                        containerColor = CardBackgroundDark
+                        containerColor = MaterialTheme.colorScheme.surface
                     )
                 )
             }

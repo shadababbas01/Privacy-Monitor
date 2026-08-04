@@ -25,12 +25,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.privacymonitor.android.R
-import com.privacymonitor.android.core.designsystem.CardBackgroundDark
-import com.privacymonitor.android.core.designsystem.DeepNavyDark
-import com.privacymonitor.android.core.designsystem.PrimaryPurple
 import com.privacymonitor.android.core.designsystem.SafeTeal
-import com.privacymonitor.android.core.designsystem.TextPrimaryDark
-import com.privacymonitor.android.core.designsystem.TextSecondaryDark
 import com.privacymonitor.android.core.designsystem.WarningAmber
 
 @Composable
@@ -40,13 +35,13 @@ fun SensorsScreen(viewModel: SensorsViewModel) {
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .background(DeepNavyDark)
+            .background(MaterialTheme.colorScheme.background)
             .padding(16.dp)
     ) {
         Text(
             text = stringResource(id = R.string.live_sensors),
             style = MaterialTheme.typography.headlineMedium,
-            color = TextPrimaryDark,
+            color = MaterialTheme.colorScheme.onSurface,
             fontWeight = FontWeight.Bold
         )
 
@@ -57,7 +52,7 @@ fun SensorsScreen(viewModel: SensorsViewModel) {
                 Card(
                     modifier = Modifier.fillMaxWidth(),
                     shape = RoundedCornerShape(18.dp),
-                    colors = CardDefaults.cardColors(containerColor = CardBackgroundDark)
+                    colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface)
                 ) {
                     Column(modifier = Modifier.padding(16.dp)) {
                         Row(
@@ -68,13 +63,13 @@ fun SensorsScreen(viewModel: SensorsViewModel) {
                             Text(
                                 text = sensor.name,
                                 style = MaterialTheme.typography.titleLarge,
-                                color = TextPrimaryDark,
+                                color = MaterialTheme.colorScheme.onSurface,
                                 fontWeight = FontWeight.Bold
                             )
                             Text(
                                 text = sensor.state.name,
                                 style = MaterialTheme.typography.labelLarge,
-                                color = if (sensor.state.name == "ACTIVE") SafeTeal else TextSecondaryDark,
+                                color = if (sensor.state.name == "ACTIVE") SafeTeal else MaterialTheme.colorScheme.onSurfaceVariant,
                                 fontWeight = FontWeight.Bold
                             )
                         }
@@ -84,7 +79,7 @@ fun SensorsScreen(viewModel: SensorsViewModel) {
                         Text(
                             text = "${sensor.appsWithAccessCount} apps have permission access",
                             style = MaterialTheme.typography.bodyMedium,
-                            color = TextSecondaryDark
+                            color = MaterialTheme.colorScheme.onSurfaceVariant
                         )
 
                         sensor.limitationNote?.let { note ->

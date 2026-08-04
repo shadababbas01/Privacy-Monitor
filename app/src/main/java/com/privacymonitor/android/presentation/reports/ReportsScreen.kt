@@ -16,7 +16,6 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.PictureAsPdf
-import androidx.compose.material.icons.filled.Share
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
@@ -35,11 +34,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.core.content.FileProvider
 import com.privacymonitor.android.R
-import com.privacymonitor.android.core.designsystem.CardBackgroundDark
-import com.privacymonitor.android.core.designsystem.DeepNavyDark
 import com.privacymonitor.android.core.designsystem.PrimaryPurple
-import com.privacymonitor.android.core.designsystem.TextPrimaryDark
-import com.privacymonitor.android.core.designsystem.TextSecondaryDark
 
 @Composable
 fun ReportsScreen(viewModel: ReportsViewModel) {
@@ -50,13 +45,13 @@ fun ReportsScreen(viewModel: ReportsViewModel) {
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .background(DeepNavyDark)
+            .background(MaterialTheme.colorScheme.background)
             .padding(16.dp)
     ) {
         Text(
             text = stringResource(id = R.string.nav_reports),
             style = MaterialTheme.typography.headlineMedium,
-            color = TextPrimaryDark,
+            color = MaterialTheme.colorScheme.onSurface,
             fontWeight = FontWeight.Bold
         )
 
@@ -67,7 +62,7 @@ fun ReportsScreen(viewModel: ReportsViewModel) {
                 Card(
                     modifier = Modifier.fillMaxWidth(),
                     shape = RoundedCornerShape(20.dp),
-                    colors = CardDefaults.cardColors(containerColor = CardBackgroundDark)
+                    colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface)
                 ) {
                     Column(modifier = Modifier.padding(18.dp)) {
                         Row(
@@ -78,7 +73,7 @@ fun ReportsScreen(viewModel: ReportsViewModel) {
                             Text(
                                 text = "Weekly Privacy Audit",
                                 style = MaterialTheme.typography.titleLarge,
-                                color = TextPrimaryDark,
+                                color = MaterialTheme.colorScheme.onSurface,
                                 fontWeight = FontWeight.Bold
                             )
                             Text(
@@ -94,7 +89,7 @@ fun ReportsScreen(viewModel: ReportsViewModel) {
                         Text(
                             text = report.summaryHinglish,
                             style = MaterialTheme.typography.bodyMedium,
-                            color = TextPrimaryDark
+                            color = MaterialTheme.colorScheme.onSurface
                         )
 
                         Spacer(modifier = Modifier.height(14.dp))
@@ -109,9 +104,9 @@ fun ReportsScreen(viewModel: ReportsViewModel) {
                                 shape = RoundedCornerShape(14.dp),
                                 colors = ButtonDefaults.buttonColors(containerColor = PrimaryPurple)
                             ) {
-                                Icon(Icons.Default.PictureAsPdf, contentDescription = null, tint = TextPrimaryDark)
+                                Icon(Icons.Default.PictureAsPdf, contentDescription = null, tint = MaterialTheme.colorScheme.onPrimary)
                                 Spacer(modifier = Modifier.width(6.dp))
-                                Text(stringResource(id = R.string.export_pdf), color = TextPrimaryDark)
+                                Text(stringResource(id = R.string.export_pdf), color = MaterialTheme.colorScheme.onPrimary)
                             }
                         }
                     }

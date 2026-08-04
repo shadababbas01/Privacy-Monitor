@@ -5,7 +5,6 @@ import android.net.Uri
 import android.provider.Settings
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -20,7 +19,6 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.Settings
-import androidx.compose.material.icons.filled.Warning
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
@@ -39,12 +37,8 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.privacymonitor.android.R
-import com.privacymonitor.android.core.designsystem.CardBackgroundDark
-import com.privacymonitor.android.core.designsystem.DeepNavyDark
 import com.privacymonitor.android.core.designsystem.HighRiskRed
 import com.privacymonitor.android.core.designsystem.PrimaryPurple
-import com.privacymonitor.android.core.designsystem.TextPrimaryDark
-import com.privacymonitor.android.core.designsystem.TextSecondaryDark
 import com.privacymonitor.android.core.designsystem.WarningAmber
 
 @Composable
@@ -60,18 +54,18 @@ fun AppDetailScreen(
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .background(DeepNavyDark)
+            .background(MaterialTheme.colorScheme.background)
             .padding(16.dp)
     ) {
         Row(verticalAlignment = Alignment.CenterVertically) {
             IconButton(onClick = onBackClick) {
-                Icon(Icons.Default.ArrowBack, contentDescription = "Back", tint = TextPrimaryDark)
+                Icon(Icons.Default.ArrowBack, contentDescription = "Back", tint = MaterialTheme.colorScheme.onSurface)
             }
             Spacer(modifier = Modifier.width(8.dp))
             Text(
                 text = app?.appName ?: "App Details",
                 style = MaterialTheme.typography.headlineMedium,
-                color = TextPrimaryDark,
+                color = MaterialTheme.colorScheme.onSurface,
                 fontWeight = FontWeight.Bold
             )
         }
@@ -84,17 +78,17 @@ fun AppDetailScreen(
                     Card(
                         modifier = Modifier.fillMaxWidth(),
                         shape = RoundedCornerShape(20.dp),
-                        colors = CardDefaults.cardColors(containerColor = CardBackgroundDark)
+                        colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface)
                     ) {
                         Column(modifier = Modifier.padding(16.dp)) {
-                            Text(text = "Package: ${app.packageName}", style = MaterialTheme.typography.bodyMedium, color = TextSecondaryDark)
-                            Text(text = "Version: ${app.versionName}", style = MaterialTheme.typography.bodyMedium, color = TextSecondaryDark)
-                            Text(text = "Installer: ${app.installerPackageName ?: "Unknown / Sideloaded"}", style = MaterialTheme.typography.bodyMedium, color = TextSecondaryDark)
+                            Text(text = "Package: ${app.packageName}", style = MaterialTheme.typography.bodyMedium, color = MaterialTheme.colorScheme.onSurfaceVariant)
+                            Text(text = "Version: ${app.versionName}", style = MaterialTheme.typography.bodyMedium, color = MaterialTheme.colorScheme.onSurfaceVariant)
+                            Text(text = "Installer: ${app.installerPackageName ?: "Unknown / Sideloaded"}", style = MaterialTheme.typography.bodyMedium, color = MaterialTheme.colorScheme.onSurfaceVariant)
                             Spacer(modifier = Modifier.height(8.dp))
                             Text(
                                 text = "Privacy Score: ${app.riskScore}/100",
                                 style = MaterialTheme.typography.titleLarge,
-                                color = TextPrimaryDark,
+                                color = MaterialTheme.colorScheme.onSurface,
                                 fontWeight = FontWeight.Bold
                             )
                         }
@@ -113,13 +107,13 @@ fun AppDetailScreen(
                         shape = RoundedCornerShape(16.dp),
                         colors = ButtonDefaults.buttonColors(containerColor = PrimaryPurple)
                     ) {
-                        Icon(Icons.Default.Settings, contentDescription = null, tint = TextPrimaryDark)
+                        Icon(Icons.Default.Settings, contentDescription = null, tint = MaterialTheme.colorScheme.onPrimary)
                         Spacer(modifier = Modifier.width(8.dp))
                         Text(
                             text = stringResource(id = R.string.review_permissions),
                             style = MaterialTheme.typography.titleMedium,
                             fontWeight = FontWeight.SemiBold,
-                            color = TextPrimaryDark
+                            color = MaterialTheme.colorScheme.onPrimary
                         )
                     }
                 }
@@ -128,7 +122,7 @@ fun AppDetailScreen(
                     Text(
                         text = "Score Deductions & Risk Reasons",
                         style = MaterialTheme.typography.titleMedium,
-                        color = TextPrimaryDark,
+                        color = MaterialTheme.colorScheme.onSurface,
                         fontWeight = FontWeight.SemiBold
                     )
                 }
@@ -137,7 +131,7 @@ fun AppDetailScreen(
                     Card(
                         modifier = Modifier.fillMaxWidth(),
                         shape = RoundedCornerShape(16.dp),
-                        colors = CardDefaults.cardColors(containerColor = CardBackgroundDark)
+                        colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface)
                     ) {
                         Column(modifier = Modifier.padding(14.dp)) {
                             Row(
@@ -148,7 +142,7 @@ fun AppDetailScreen(
                                 Text(text = "-${reason.pointsDeducted} pts", style = MaterialTheme.typography.labelLarge, color = HighRiskRed)
                             }
                             Spacer(modifier = Modifier.height(4.dp))
-                            Text(text = reason.explanation, style = MaterialTheme.typography.bodyMedium, color = TextPrimaryDark)
+                            Text(text = reason.explanation, style = MaterialTheme.typography.bodyMedium, color = MaterialTheme.colorScheme.onSurface)
                             Spacer(modifier = Modifier.height(4.dp))
                             Text(text = "Action: ${reason.recommendation}", style = MaterialTheme.typography.labelMedium, color = WarningAmber)
                         }
@@ -159,7 +153,7 @@ fun AppDetailScreen(
                     Text(
                         text = "Permissions (${app.permissions.size})",
                         style = MaterialTheme.typography.titleMedium,
-                        color = TextPrimaryDark,
+                        color = MaterialTheme.colorScheme.onSurface,
                         fontWeight = FontWeight.SemiBold
                     )
                 }
@@ -168,7 +162,7 @@ fun AppDetailScreen(
                     Card(
                         modifier = Modifier.fillMaxWidth(),
                         shape = RoundedCornerShape(14.dp),
-                        colors = CardDefaults.cardColors(containerColor = CardBackgroundDark)
+                        colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface)
                     ) {
                         Row(
                             modifier = Modifier.fillMaxWidth().padding(12.dp),
@@ -176,12 +170,12 @@ fun AppDetailScreen(
                             verticalAlignment = Alignment.CenterVertically
                         ) {
                             Column(modifier = Modifier.weight(1f)) {
-                                Text(text = perm.name.substringAfterLast("."), style = MaterialTheme.typography.titleMedium, color = TextPrimaryDark)
-                                Text(text = perm.category, style = MaterialTheme.typography.bodyMedium, color = TextSecondaryDark)
+                                Text(text = perm.name.substringAfterLast("."), style = MaterialTheme.typography.titleMedium, color = MaterialTheme.colorScheme.onSurface)
+                                Text(text = perm.category, style = MaterialTheme.typography.bodyMedium, color = MaterialTheme.colorScheme.onSurfaceVariant)
                             }
                             Text(
                                 text = if (perm.isGranted) "Granted" else "Denied",
-                                color = if (perm.isGranted) HighRiskRed else TextSecondaryDark,
+                                color = if (perm.isGranted) HighRiskRed else MaterialTheme.colorScheme.onSurfaceVariant,
                                 style = MaterialTheme.typography.labelMedium,
                                 fontWeight = FontWeight.Bold
                             )

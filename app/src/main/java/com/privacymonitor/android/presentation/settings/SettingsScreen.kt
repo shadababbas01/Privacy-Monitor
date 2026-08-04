@@ -27,11 +27,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.privacymonitor.android.R
-import com.privacymonitor.android.core.designsystem.CardBackgroundDark
-import com.privacymonitor.android.core.designsystem.DeepNavyDark
 import com.privacymonitor.android.core.designsystem.PrimaryPurple
-import com.privacymonitor.android.core.designsystem.TextPrimaryDark
-import com.privacymonitor.android.core.designsystem.TextSecondaryDark
 
 @Composable
 fun SettingsScreen(viewModel: SettingsViewModel) {
@@ -40,13 +36,13 @@ fun SettingsScreen(viewModel: SettingsViewModel) {
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .background(DeepNavyDark)
+            .background(MaterialTheme.colorScheme.background)
             .padding(16.dp)
     ) {
         Text(
             text = stringResource(id = R.string.nav_settings),
             style = MaterialTheme.typography.headlineMedium,
-            color = TextPrimaryDark,
+            color = MaterialTheme.colorScheme.onSurface,
             fontWeight = FontWeight.Bold
         )
 
@@ -57,17 +53,17 @@ fun SettingsScreen(viewModel: SettingsViewModel) {
                 Card(
                     modifier = Modifier.fillMaxWidth(),
                     shape = RoundedCornerShape(18.dp),
-                    colors = CardDefaults.cardColors(containerColor = CardBackgroundDark)
+                    colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface)
                 ) {
                     Column(modifier = Modifier.padding(16.dp)) {
-                        Text(text = "App Language", style = MaterialTheme.typography.titleMedium, color = TextPrimaryDark, fontWeight = FontWeight.Bold)
+                        Text(text = "App Language", style = MaterialTheme.typography.titleMedium, color = MaterialTheme.colorScheme.onSurface, fontWeight = FontWeight.Bold)
                         Row(verticalAlignment = Alignment.CenterVertically) {
                             RadioButton(
                                 selected = state.language == "hi",
                                 onClick = { viewModel.setLanguage("hi") },
                                 colors = RadioButtonDefaults.colors(selectedColor = PrimaryPurple)
                             )
-                            Text(text = "Hindi / Hinglish", color = TextPrimaryDark)
+                            Text(text = "Hindi / Hinglish", color = MaterialTheme.colorScheme.onSurface)
                         }
                         Row(verticalAlignment = Alignment.CenterVertically) {
                             RadioButton(
@@ -75,7 +71,7 @@ fun SettingsScreen(viewModel: SettingsViewModel) {
                                 onClick = { viewModel.setLanguage("en") },
                                 colors = RadioButtonDefaults.colors(selectedColor = PrimaryPurple)
                             )
-                            Text(text = "English", color = TextPrimaryDark)
+                            Text(text = "English", color = MaterialTheme.colorScheme.onSurface)
                         }
                     }
                 }
@@ -87,18 +83,18 @@ fun SettingsScreen(viewModel: SettingsViewModel) {
                 Card(
                     modifier = Modifier.fillMaxWidth(),
                     shape = RoundedCornerShape(18.dp),
-                    colors = CardDefaults.cardColors(containerColor = CardBackgroundDark)
+                    colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface)
                 ) {
                     Column(modifier = Modifier.padding(16.dp)) {
-                        Text(text = "Cloud AI Advisor (Optional)", style = MaterialTheme.typography.titleMedium, color = TextPrimaryDark, fontWeight = FontWeight.Bold)
+                        Text(text = "Cloud AI Advisor (Optional)", style = MaterialTheme.typography.titleMedium, color = MaterialTheme.colorScheme.onSurface, fontWeight = FontWeight.Bold)
                         Spacer(modifier = Modifier.height(4.dp))
-                        Text(text = "Off by default. When enabled, anonymized queries can use Gemini API.", style = MaterialTheme.typography.bodyMedium, color = TextSecondaryDark)
+                        Text(text = "Off by default. When enabled, anonymized queries can use Gemini API.", style = MaterialTheme.typography.bodyMedium, color = MaterialTheme.colorScheme.onSurfaceVariant)
                         Spacer(modifier = Modifier.height(8.dp))
                         Row(
                             modifier = Modifier.fillMaxWidth(),
                             verticalAlignment = Alignment.CenterVertically
                         ) {
-                            Text(text = "Enable Cloud AI", color = TextPrimaryDark, modifier = Modifier.weight(1f))
+                            Text(text = "Enable Cloud AI", color = MaterialTheme.colorScheme.onSurface, modifier = Modifier.weight(1f))
                             Switch(
                                 checked = state.cloudAiOptIn,
                                 onCheckedChange = { viewModel.setCloudAiOptIn(it) },
@@ -115,12 +111,12 @@ fun SettingsScreen(viewModel: SettingsViewModel) {
                 Card(
                     modifier = Modifier.fillMaxWidth(),
                     shape = RoundedCornerShape(18.dp),
-                    colors = CardDefaults.cardColors(containerColor = CardBackgroundDark)
+                    colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface)
                 ) {
                     Column(modifier = Modifier.padding(16.dp)) {
-                        Text(text = "About Privacy Monitor", style = MaterialTheme.typography.titleMedium, color = TextPrimaryDark, fontWeight = FontWeight.Bold)
-                        Text(text = "Version 1.0.0 (Build 1)", style = MaterialTheme.typography.bodyMedium, color = TextSecondaryDark)
-                        Text(text = "100% Local-First Device Analysis", style = MaterialTheme.typography.bodyMedium, color = TextSecondaryDark)
+                        Text(text = "About Privacy Monitor", style = MaterialTheme.typography.titleMedium, color = MaterialTheme.colorScheme.onSurface, fontWeight = FontWeight.Bold)
+                        Text(text = "Version 1.0.0 (Build 1)", style = MaterialTheme.typography.bodyMedium, color = MaterialTheme.colorScheme.onSurfaceVariant)
+                        Text(text = "100% Local-First Device Analysis", style = MaterialTheme.typography.bodyMedium, color = MaterialTheme.colorScheme.onSurfaceVariant)
                     }
                 }
             }

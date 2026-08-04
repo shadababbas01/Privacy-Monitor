@@ -30,11 +30,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.privacymonitor.android.R
-import com.privacymonitor.android.core.designsystem.CardBackgroundDark
-import com.privacymonitor.android.core.designsystem.DeepNavyDark
 import com.privacymonitor.android.core.designsystem.PrimaryPurple
-import com.privacymonitor.android.core.designsystem.TextPrimaryDark
-import com.privacymonitor.android.core.designsystem.TextSecondaryDark
 
 @Composable
 fun OnboardingScreen(
@@ -46,7 +42,7 @@ fun OnboardingScreen(
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .background(DeepNavyDark)
+            .background(MaterialTheme.colorScheme.background)
             .padding(24.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center
@@ -54,7 +50,7 @@ fun OnboardingScreen(
         Box(
             modifier = Modifier
                 .size(100.dp)
-                .background(CardBackgroundDark, RoundedCornerShape(50.dp)),
+                .background(MaterialTheme.colorScheme.surface, RoundedCornerShape(50.dp)),
             contentAlignment = Alignment.Center
         ) {
             Icon(
@@ -70,7 +66,7 @@ fun OnboardingScreen(
         Text(
             text = stringResource(id = R.string.onboarding_title_1),
             style = MaterialTheme.typography.displayMedium,
-            color = TextPrimaryDark,
+            color = MaterialTheme.colorScheme.onSurface,
             textAlign = TextAlign.Center
         )
 
@@ -79,7 +75,7 @@ fun OnboardingScreen(
         Text(
             text = stringResource(id = R.string.onboarding_body_1),
             style = MaterialTheme.typography.bodyLarge,
-            color = TextSecondaryDark,
+            color = MaterialTheme.colorScheme.onSurfaceVariant,
             textAlign = TextAlign.Center,
             lineHeight = 22.sp
         )
@@ -92,7 +88,7 @@ fun OnboardingScreen(
             Text(
                 text = stringResource(id = R.string.scanning_progress),
                 style = MaterialTheme.typography.bodyMedium,
-                color = TextSecondaryDark
+                color = MaterialTheme.colorScheme.onSurfaceVariant
             )
         } else {
             Button(
@@ -107,7 +103,7 @@ fun OnboardingScreen(
                     text = stringResource(id = R.string.check_privacy),
                     style = MaterialTheme.typography.titleMedium,
                     fontWeight = FontWeight.SemiBold,
-                    color = TextPrimaryDark
+                    color = MaterialTheme.colorScheme.onPrimary
                 )
             }
         }

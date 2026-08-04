@@ -36,12 +36,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.privacymonitor.android.R
-import com.privacymonitor.android.core.designsystem.CardBackgroundDark
-import com.privacymonitor.android.core.designsystem.DeepNavyDark
 import com.privacymonitor.android.core.designsystem.PrimaryPurple
-import com.privacymonitor.android.core.designsystem.SurfaceDark
-import com.privacymonitor.android.core.designsystem.TextPrimaryDark
-import com.privacymonitor.android.core.designsystem.TextSecondaryDark
 import com.privacymonitor.android.core.designsystem.WarningAmber
 
 @Composable
@@ -52,19 +47,19 @@ fun PrivacyAdvisorScreen(viewModel: AdvisorViewModel) {
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .background(DeepNavyDark)
+            .background(MaterialTheme.colorScheme.background)
             .padding(16.dp)
     ) {
         Text(
             text = stringResource(id = R.string.advisor_title),
             style = MaterialTheme.typography.headlineMedium,
-            color = TextPrimaryDark,
+            color = MaterialTheme.colorScheme.onSurface,
             fontWeight = FontWeight.Bold
         )
         Text(
             text = stringResource(id = R.string.advisor_subtitle),
             style = MaterialTheme.typography.bodyMedium,
-            color = TextSecondaryDark
+            color = MaterialTheme.colorScheme.onSurfaceVariant
         )
 
         Spacer(modifier = Modifier.height(12.dp))
@@ -83,14 +78,14 @@ fun PrivacyAdvisorScreen(viewModel: AdvisorViewModel) {
                         modifier = Modifier.fillMaxWidth(0.85f),
                         shape = RoundedCornerShape(16.dp),
                         colors = CardDefaults.cardColors(
-                            containerColor = if (isUser) PrimaryPurple else CardBackgroundDark
+                            containerColor = if (isUser) PrimaryPurple else MaterialTheme.colorScheme.surface
                         )
                     ) {
                         Column(modifier = Modifier.padding(14.dp)) {
                             Text(
                                 text = msg.text,
                                 style = MaterialTheme.typography.bodyLarge,
-                                color = TextPrimaryDark
+                                color = if (isUser) MaterialTheme.colorScheme.onPrimary else MaterialTheme.colorScheme.onSurface
                             )
                             msg.recommendation?.let { rec ->
                                 Spacer(modifier = Modifier.height(6.dp))
@@ -116,15 +111,15 @@ fun PrivacyAdvisorScreen(viewModel: AdvisorViewModel) {
                 value = inputText,
                 onValueChange = { inputText = it },
                 modifier = Modifier.weight(1f),
-                placeholder = { Text(stringResource(id = R.string.ask_advisor_placeholder), color = TextSecondaryDark) },
+                placeholder = { Text(stringResource(id = R.string.ask_advisor_placeholder), color = MaterialTheme.colorScheme.onSurfaceVariant) },
                 shape = RoundedCornerShape(20.dp),
                 colors = OutlinedTextFieldDefaults.colors(
-                    focusedContainerColor = CardBackgroundDark,
-                    unfocusedContainerColor = CardBackgroundDark,
+                    focusedContainerColor = MaterialTheme.colorScheme.surface,
+                    unfocusedContainerColor = MaterialTheme.colorScheme.surface,
                     focusedBorderColor = PrimaryPurple,
-                    unfocusedBorderColor = CardBackgroundDark,
-                    focusedTextColor = TextPrimaryDark,
-                    unfocusedTextColor = TextPrimaryDark
+                    unfocusedBorderColor = MaterialTheme.colorScheme.surfaceVariant,
+                    focusedTextColor = MaterialTheme.colorScheme.onSurface,
+                    unfocusedTextColor = MaterialTheme.colorScheme.onSurface
                 )
             )
             Spacer(modifier = Modifier.width(8.dp))
@@ -135,7 +130,7 @@ fun PrivacyAdvisorScreen(viewModel: AdvisorViewModel) {
                 },
                 modifier = Modifier.background(PrimaryPurple, RoundedCornerShape(20.dp))
             ) {
-                Icon(Icons.Default.Send, contentDescription = "Send", tint = TextPrimaryDark)
+                Icon(Icons.Default.Send, contentDescription = "Send", tint = MaterialTheme.colorScheme.onPrimary)
             }
         }
     }

@@ -7,6 +7,7 @@ import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.Sensors
 import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.NavigationBarItemDefaults
@@ -17,10 +18,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.navigation.NavController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import com.privacymonitor.android.R
-import com.privacymonitor.android.core.designsystem.CardBackgroundDark
 import com.privacymonitor.android.core.designsystem.PrimaryPurple
-import com.privacymonitor.android.core.designsystem.TextPrimaryDark
-import com.privacymonitor.android.core.designsystem.TextSecondaryDark
 
 sealed class BottomNavItem(val screen: Screen, val icon: ImageVector, val labelResId: Int) {
     object Home : BottomNavItem(Screen.Home, Icons.Default.Home, R.string.nav_home)
@@ -44,7 +42,7 @@ fun PrivacyBottomBar(navController: NavController) {
     val currentRoute = navBackStackEntry.value?.destination?.route
 
     NavigationBar(
-        containerColor = CardBackgroundDark
+        containerColor = MaterialTheme.colorScheme.surface
     ) {
         items.forEach { item ->
             val selected = currentRoute == item.screen.route
@@ -55,9 +53,9 @@ fun PrivacyBottomBar(navController: NavController) {
                 colors = NavigationBarItemDefaults.colors(
                     selectedIconColor = PrimaryPurple,
                     selectedTextColor = PrimaryPurple,
-                    unselectedIconColor = TextSecondaryDark,
-                    unselectedTextColor = TextSecondaryDark,
-                    indicatorColor = CardBackgroundDark
+                    unselectedIconColor = MaterialTheme.colorScheme.onSurfaceVariant,
+                    unselectedTextColor = MaterialTheme.colorScheme.onSurfaceVariant,
+                    indicatorColor = MaterialTheme.colorScheme.surfaceVariant
                 ),
                 onClick = {
                     if (currentRoute != item.screen.route) {
